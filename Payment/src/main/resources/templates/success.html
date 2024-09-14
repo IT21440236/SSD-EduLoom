@@ -1,0 +1,503 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <title>Insert title here</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Payment Success</h1>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <title>Payment Success</title>-->
+<!--  &lt;!&ndash; Include pdfmake library &ndash;&gt;-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Payment Success</h1>-->
+<!--<button id="downloadPdf">Download PDF</button>-->
+<!--<button id="confirm">Confirm</button>-->
+
+<!--<script>-->
+<!--  // Function to generate and download PDF-->
+<!--  document.getElementById('downloadPdf').addEventListener('click', function () {-->
+<!--    // Define content for the PDF-->
+<!--    var content = [-->
+<!--      { text: 'Payment Success', style: 'header' },-->
+<!--      { text: 'Your payment was successful. Thank you!', style: 'successMessage' }-->
+<!--    ];-->
+
+<!--    // Define styles-->
+<!--    var styles = {-->
+<!--      header: { fontSize: 24, bold: true, margin: [0, 0, 0, 20] },-->
+<!--      successMessage: { fontSize: 18, margin: [0, 0, 0, 10] }-->
+<!--    };-->
+
+<!--    // Define PDF document-->
+<!--    var docDefinition = {-->
+<!--      content: content,-->
+<!--      styles: styles-->
+<!--    };-->
+
+<!--    // Generate PDF-->
+<!--    pdfMake.createPdf(docDefinition).download('payment_success.pdf');-->
+<!--  });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--  <meta charset="UTF-8" />-->
+<!--  <title>Payment Success</title>-->
+<!--  &lt;!&ndash; Include pdfmake library &ndash;&gt;-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/pdfmake.min.js"></script>-->
+<!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.70/vfs_fonts.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Payment Success</h1>-->
+<!--<button id="downloadPdf">Download PDF</button>-->
+<!--<button id="confirm">Confirm</button>-->
+
+<!--<script>-->
+<!--  // Function to generate and download PDF-->
+<!--  document.getElementById('downloadPdf').addEventListener('click', function () {-->
+<!--    // Define content for the PDF-->
+<!--    var content = [-->
+<!--      { text: 'Payment Success', style: 'header' },-->
+<!--      { text: 'Your payment was successful. Thank you!', style: 'successMessage' }-->
+<!--    ];-->
+
+<!--    // Define styles-->
+<!--    var styles = {-->
+<!--      header: { fontSize: 24, bold: true, margin: [0, 0, 0, 20] },-->
+<!--      successMessage: { fontSize: 18, margin: [0, 0, 0, 10] }-->
+<!--    };-->
+
+<!--    // Define PDF document-->
+<!--    var docDefinition = {-->
+<!--      content: content,-->
+<!--      styles: styles-->
+<!--    };-->
+
+<!--    // Generate PDF-->
+<!--    pdfMake.createPdf(docDefinition).download('payment_success.pdf');-->
+<!--  });-->
+
+<!--  // Function to handle confirm button click-->
+<!--  document.getElementById('confirm').addEventListener('click', function () {-->
+<!--    // Get the learner ID entered by the user-->
+<!--    var learnerId = document.getElementById("learnerId").value;-->
+
+<!--    // Make an AJAX request to update payment status-->
+<!--    var xhr = new XMLHttpRequest();-->
+<!--    xhr.open("PUT", "http://localhost:9090/api/v1/payments/updatePaymentStatus/" + learnerId, true);-->
+<!--    xhr.onreadystatechange = function () {-->
+<!--      if (xhr.readyState === 4) {-->
+<!--        if (xhr.status === 200) {-->
+<!--          // Payment status updated successfully-->
+<!--          alert("Payment status updated successfully for learner with ID: " + learnerId);-->
+<!--          console.log("Payment is successful.");-->
+<!--        } else {-->
+<!--          // Failed to update payment status-->
+<!--          alert("Failed to update payment status for learner with ID: " + learnerId);-->
+<!--        }-->
+<!--      }-->
+<!--    };-->
+<!--    xhr.send();-->
+<!--  });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Success Message</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      margin: 0;-->
+<!--      height: 100vh;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      background-color: #f0f0f0;-->
+<!--    }-->
+<!--    .success-message {-->
+<!--      text-align: center;-->
+<!--    }-->
+<!--    .success-icon {-->
+<!--      color: white;-->
+<!--      font-size: 100px; /* Adjust the font size for a larger circle */-->
+<!--      border-radius: 50%;-->
+<!--      background-color: #006400; /* Dark green */-->
+<!--      width: 200px; /* Adjust the width and height for a larger circle */-->
+<!--      height: 200px;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      margin: 0 auto 20px; /* Add some margin for spacing */-->
+<!--      animation: pulse 2s infinite alternate; /* Add pulse animation */-->
+<!--    }-->
+<!--    .success-icon i {-->
+<!--      color: white; /* Change the color of the check mark to white */-->
+<!--    }-->
+<!--    @keyframes pulse {-->
+<!--      from {-->
+<!--        transform: scale(1);-->
+<!--      }-->
+<!--      to {-->
+<!--        transform: scale(1.1);-->
+<!--      }-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="success-message">-->
+<!--  <div class="success-icon">-->
+<!--    <i class="fas fa-check-circle fa-3x"></i> &lt;!&ndash; Use a larger check mark icon if needed &ndash;&gt;-->
+<!--  </div>-->
+<!--  <h1>Payment Successful!</h1>-->
+<!--  <p>Your payment has been processed successfully.</p>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Font Awesome &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Success Message</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      margin: 0;-->
+<!--      height: 100vh;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      background-color: #f0f0f0;-->
+<!--      overflow: hidden; /* Hide overflow to prevent scroll bars */-->
+<!--      position: relative; /* Position relative to contain absolutely positioned emojis */-->
+<!--    }-->
+<!--    .emoji {-->
+<!--      font-size: 40px; /* Adjust emoji size */-->
+<!--      position: absolute; /* Position absolutely */-->
+<!--      animation: fadeInOut 5s ease-in-out infinite; /* Animation to fade in and out */-->
+<!--    }-->
+<!--    @keyframes fadeInOut {-->
+<!--      0% {-->
+<!--        opacity: 0; /* Start with opacity 0 */-->
+<!--      }-->
+<!--      25% {-->
+<!--        opacity: 1; /* Fade in */-->
+<!--      }-->
+<!--      75% {-->
+<!--        opacity: 1; /* Stay visible */-->
+<!--      }-->
+<!--      100% {-->
+<!--        opacity: 0; /* Fade out */-->
+<!--      }-->
+<!--    }-->
+
+<!--    /* Hide the success message initially */-->
+<!--    .success-message {-->
+<!--      display: none;-->
+<!--      text-align: center;-->
+<!--    }-->
+<!--    .success-icon {-->
+<!--      color: white;-->
+<!--      font-size: 100px; /* Adjust the font size for a larger circle */-->
+<!--      border-radius: 50%;-->
+<!--      background-color: #006400; /* Dark green */-->
+<!--      width: 200px; /* Adjust the width and height for a larger circle */-->
+<!--      height: 200px;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      margin: 0 auto 20px; /* Add some margin for spacing */-->
+<!--    }-->
+<!--    .success-icon i {-->
+<!--      color: white; /* Change the color of the check mark to white */-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--&lt;!&ndash; Font Awesome &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">-->
+
+<!--&lt;!&ndash; Script to generate and position celebratory emojis &ndash;&gt;-->
+<!--<script>-->
+<!--  // Function to generate a random position within the page-->
+<!--  function getRandomPosition() {-->
+<!--    var x = window.innerWidth * Math.random();-->
+<!--    var y = window.innerHeight * Math.random();-->
+<!--    return { x: x, y: y };-->
+<!--  }-->
+
+<!--  // Function to create and position celebratory emojis-->
+<!--  function createEmojis() {-->
+<!--    // Number of emojis to generate-->
+<!--    var numEmojis = 20;-->
+
+<!--    // Loop to create and position emojis-->
+<!--    for (var i = 0; i < numEmojis; i++) {-->
+<!--      // Create emoji element-->
+<!--      var emoji = document.createElement("div");-->
+<!--      emoji.classList.add("emoji");-->
+<!--      emoji.innerHTML = "🎉"; // Use any celebratory emoji you like-->
+
+<!--      // Generate random position-->
+<!--      var position = getRandomPosition();-->
+
+<!--      // Set position-->
+<!--      emoji.style.top = position.y + "px";-->
+<!--      emoji.style.left = position.x + "px";-->
+
+<!--      // Append emoji to body-->
+<!--      document.body.appendChild(emoji);-->
+<!--    }-->
+
+<!--    // After the animation completes, show the success message-->
+<!--    setTimeout(function() {-->
+<!--      document.querySelector('.success-message').style.display = 'block';-->
+<!--    }, 5000); // Wait for 5 seconds (animation duration)-->
+<!--  }-->
+
+<!--  // Call function to create emojis when the page loads-->
+<!--  window.onload = createEmojis;-->
+<!--</script>-->
+
+<!--&lt;!&ndash; Success message &ndash;&gt;-->
+<!--<div class="success-message">-->
+<!--  <div class="success-icon">-->
+<!--    <i class="fas fa-check-circle fa-3x"></i> &lt;!&ndash; Use a larger check mark icon if needed &ndash;&gt;-->
+<!--  </div>-->
+<!--  <h1>Payment Successful!</h1>-->
+<!--  <p>Your payment has been processed successfully.</p>-->
+<!--</div>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Success Message</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      margin: 0;-->
+<!--      height: 100vh;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      background-color: #f0f0f0;-->
+<!--    }-->
+<!--    .success-message {-->
+<!--      text-align: center;-->
+<!--    }-->
+<!--    .success-icon {-->
+<!--      color: white;-->
+<!--      font-size: 100px; /* Adjust the font size for a larger circle */-->
+<!--      border-radius: 50%;-->
+<!--      background-color: #006400; /* Dark green */-->
+<!--      width: 200px; /* Adjust the width and height for a larger circle */-->
+<!--      height: 200px;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      margin: 0 auto 20px; /* Add some margin for spacing */-->
+<!--    }-->
+<!--    .success-icon i {-->
+<!--      color: white; /* Change the color of the check mark to white */-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="success-message">-->
+<!--  <div class="success-icon">-->
+<!--    <i class="fas fa-check-circle"></i>-->
+<!--  </div>-->
+<!--  <h1>Payment Successful!</h1>-->
+<!--  <p>Your payment has been processed successfully.</p>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Font Awesome &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Success Message</title>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      margin: 0;-->
+<!--      height: 100vh;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      background-color: #f0f0f0;-->
+<!--    }-->
+<!--    .success-message {-->
+<!--      text-align: center;-->
+<!--    }-->
+<!--    .success-icon {-->
+<!--      color: white;-->
+<!--      font-size: 100px; /* Adjust the font size for a larger circle */-->
+<!--      border-radius: 50%;-->
+<!--      background-color: #006400; /* Dark green */-->
+<!--      width: 200px; /* Adjust the width and height for a larger circle */-->
+<!--      height: 200px;-->
+<!--      display: flex;-->
+<!--      justify-content: center;-->
+<!--      align-items: center;-->
+<!--      margin: 0 auto 20px; /* Add some margin for spacing */-->
+<!--    }-->
+<!--    .success-icon i {-->
+<!--      color: white; /* Change the color of the check mark to white */-->
+<!--    }-->
+<!--    .get-report-btn {-->
+<!--      background-color: #006400; /* Green color */-->
+<!--      color: white;-->
+<!--      border: none;-->
+<!--      padding: 10px 20px;-->
+<!--      font-size: 16px;-->
+<!--      border-radius: 5px;-->
+<!--      cursor: pointer;-->
+<!--      transition: background-color 0.3s ease;-->
+<!--    }-->
+<!--    .get-report-btn:hover {-->
+<!--      background-color: #004d00; /* Darker green on hover */-->
+<!--    }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="success-message">-->
+<!--  <div class="success-icon">-->
+<!--    <i class="fas fa-check-circle"></i>-->
+<!--  </div>-->
+<!--  <h1>Payment Successful!</h1>-->
+<!--  <p>Your payment has been processed successfully.</p>-->
+<!--  &lt;!&ndash; Button to get the full report &ndash;&gt;-->
+<!--  <button class="get-report-btn">Get the Full Report</button>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Font Awesome &ndash;&gt;-->
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Success Message</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f0f0f0;
+    }
+    .success-message {
+      text-align: center;
+    }
+    .success-icon {
+      color: white;
+      font-size: 100px; /* Adjust the font size for a larger circle */
+      border-radius: 50%;
+      background-color: #006400; /* Dark green */
+      width: 200px; /* Adjust the width and height for a larger circle */
+      height: 200px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px; /* Add some margin for spacing */
+    }
+    .success-icon i {
+      color: white; /* Change the color of the check mark to white */
+    }
+    .get-report-btn {
+      background-color: #006400; /* Green color */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .get-report-btn:hover {
+      background-color: #004d00; /* Darker green on hover */
+    }
+  </style>
+</head>
+<body>
+<div class="success-message">
+  <div class="success-icon">
+    <i class="fas fa-check-circle"></i>
+  </div>
+  <h1>Payment Successful!</h1>
+  <p>Your payment has been processed successfully.</p>
+  <!-- Button to get the full report -->
+  <button class="get-report-btn" id="get-report-btn">Get the Full Report</button>
+</div>
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<!-- JavaScript -->
+<script>
+  // Function to handle button click event
+  document.getElementById("get-report-btn").addEventListener("click", function() {
+    // Prompt the user to enter learner ID
+    var learnerId = prompt("Please enter the learner ID:");
+
+    // If learner ID is not null and not empty
+    if (learnerId && learnerId.trim() !== "") {
+      // Make AJAX request to the controller
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", "http://localhost:9090/api/v1/payments/" + learnerId + "/payment-history", true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          // Redirect to the payment report page
+          window.location.href = "http://localhost:9090/api/v1/payments/" + learnerId + "/payment-history";
+        }
+      };
+      xhr.send();
+    } else {
+      alert("Invalid learner ID. Please try again.");
+    }
+  });
+</script>
+</body>
+</html>

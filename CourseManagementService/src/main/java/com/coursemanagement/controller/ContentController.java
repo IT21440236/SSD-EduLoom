@@ -1,7 +1,9 @@
 package com.coursemanagement.controller;
 
 import com.coursemanagement.dto.ContentDto;
+import com.coursemanagement.dto.ContentProgressDto;
 import com.coursemanagement.entity.Content;
+import com.coursemanagement.entity.ContentProgress;
 import com.coursemanagement.services.instructor.content.ContentServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/instructor")
@@ -53,5 +56,30 @@ public class ContentController {
         Content updatecontentDto = this.contentService.updatestatusContent(status, contentId);
 
         return new ResponseEntity<Content>(updatecontentDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/course/content/markcomplete")
+    public ResponseEntity<ContentProgress> markContentAsComplete(@RequestBody ContentProgressDto learnerProgressDto) {
+//        Long learnerId = Long.parseLong(leaner);
+//        contentService.markContentAsComplete(leaner, contentId, courseId);
+        ContentProgress learnerProgress = contentService.markContentAsComplete(learnerProgressDto);
+        return new ResponseEntity<ContentProgress>(learnerProgress, HttpStatus.OK);
+    }
+
+    @GetMapping("/course/content/progress")
+    public ResponseEntity<Map<Long, Double>> getLearnerProgressByCourse(@RequestParam Long learnerId) {
+        Map<Long, Double> progressByCourse = contentService.getLearnerProgressByCourse(learnerId);
+        return ResponseEntity.ok(progressByCourse);
+    }
+
+    @DeleteMapping("/content/{contentId}")
+    public ResponseEntity<String> deleteContent(@PathVariable("contentId") Long contentId) {
+        contentService.deleteContent(contentId);
+        return new ResponseEntity<>("Content deleted successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/learner/all")
+    public List<ContentProgress> getAllLearnerProgress() {
+        return contentService.getAllLearnerProgress();
     }
 }

@@ -18,4 +18,6 @@ public interface CourseService {
     Course getCourseById(Long courseId);
 
     Course updateCourse(CourseDto courseDto, Long courseId);
+
+    Course getOneCourse(Long courseId);
 }

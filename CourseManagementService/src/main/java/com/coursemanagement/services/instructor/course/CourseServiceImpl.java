@@ -64,4 +64,10 @@ public class CourseServiceImpl implements CourseService{
         return this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course", "Course Id", courseId));
     }
 
+    @Override
+    public Course getOneCourse(Long courseId) {
+        Course oneCourse = this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course", "course Id", courseId));
+
+        return oneCourse;
+    }
 }

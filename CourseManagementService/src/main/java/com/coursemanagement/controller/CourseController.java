@@ -52,6 +52,19 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCourseById(courseId));
     }
 
+    @GetMapping("/onecourse/{id}")
+    public ResponseEntity<Course> getOneCourse(@PathVariable("id") Long courseId){
+        Course oneCourse = this.courseService.getOneCourse(courseId);
+
+        return new ResponseEntity<Course>(oneCourse, HttpStatus.OK);
+    }
+
+    @PutMapping("/course/{courseId}")
+    public ResponseEntity<Course> updateCourseDetails(@RequestBody CourseDto courseDto, @PathVariable("courseId") Long courseId) {
+        Course updatecourseDto = this.courseService.updateCourse(courseDto, courseId);
+
+        return new ResponseEntity<Course>(updatecourseDto, HttpStatus.OK);
+    }
 
 
 }

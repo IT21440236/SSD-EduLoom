@@ -1,16 +1,21 @@
 package com.coursemanagement.services.instructor.content;
 
 import com.coursemanagement.dto.ContentDto;
+import com.coursemanagement.dto.ContentProgressDto;
 import com.coursemanagement.entity.Content;
+import com.coursemanagement.entity.ContentProgress;
 import com.coursemanagement.entity.Course;
 import com.coursemanagement.exception.ResourceNotFoundException;
+import com.coursemanagement.repository.ContentProgressRepository;
 import com.coursemanagement.repository.ContentRepository;
 import com.coursemanagement.repository.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +25,8 @@ public class ContentServiceImpl implements ContentService{
     private final CourseRepository courseRepository;
 
     private final ContentRepository contentRepository;
+
+    private final ContentProgressRepository learnerProgressRepository;
     @Override
     public ContentDto addContent(ContentDto contentDto) throws IOException {
         Content content = new Content();
@@ -81,5 +88,66 @@ public class ContentServiceImpl implements ContentService{
         updateContent.setStatus(status);
 
         return this.contentRepository.save(updateContent);
+    }
+
+    @Override
+    public ContentProgress markContentAsComplete(ContentProgressDto learnerProgressDto) {
+        Long learnerId = learnerProgressDto.getLearnerId();
+        Long contentId = learnerProgressDto.getContentId();
+        ContentProgress learnerProgress = learnerProgressRepository.findByLearnerIdAndContentId(learnerId, contentId);
+        if (learnerProgress == null) {
+            learnerProgress = new ContentProgress();
+            learnerProgress.setLearnerId(learnerId);
+            learnerProgress.setContentId(contentId);
+            learnerProgress.setCourseId(learnerProgressDto.getCourseId());
+            learnerProgress.setCompleted(true);
+            return learnerProgressRepository.save(learnerProgress);
+        } else {
+            learnerProgress.setCompleted(true);
+            return learnerProgressRepository.save(learnerProgress);
+        }
+    }
+
+    @Override
+    public Map<Long, Double> getLearnerProgressByCourse(Long learnerId) {
+        List<ContentProgress> learnerProgressList = learnerProgressRepository.findByLearnerId(learnerId);
+
+        // Grouping learner progress by courseId
+        Map<Long, List<ContentProgress>> progressByCourse = learnerProgressList.stream()
+                .collect(Collectors.groupingBy(ContentProgress::getCourseId));
+
+        // Calculating completion percentage for each course
+        Map<Long, Double> progressByCourseMap = new HashMap<>();
+        for (Map.Entry<Long, List<ContentProgress>> entry : progressByCourse.entrySet()) {
+            Long courseId = entry.getKey();
+            List<ContentProgress> courseProgress = entry.getValue();
+
+            // Counting completed contents
+            long completedContents = courseProgress.stream()
+                    .filter(ContentProgress::isCompleted)
+                    .count();
+
+            // Total contents in the course
+//            long totalContents = courseProgress.size();
+            int contentCount = contentRepository.countByCourseId(courseId);
+
+            // Calculating completion percentage
+            double completionPercentage = ((double) completedContents / contentCount) * 100;
+
+            // Putting the completion percentage in the map
+            progressByCourseMap.put(courseId, completionPercentage);
+        }
+
+        return progressByCourseMap;
+    }
+
+    @Override
+    public void deleteContent(Long contentId) {
+        this.contentRepository.delete(this.contentRepository.findById(contentId).orElseThrow(() -> new ResourceNotFoundException("Content", "Content Id", contentId)));
+    }
+
+    @Override
+    public List<ContentProgress> getAllLearnerProgress() {
+        return learnerProgressRepository.findAll();
     }
 }

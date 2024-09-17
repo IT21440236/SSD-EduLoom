@@ -4,9 +4,11 @@ import com.coursemanagement.dto.ContentDto;
 import com.coursemanagement.dto.CourseDto;
 import com.coursemanagement.entity.Course;
 import com.coursemanagement.services.instructor.course.CourseServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +22,7 @@ public class CourseController {
     private final CourseServiceImpl courseService;
 
     @PostMapping("/course")
-    public ResponseEntity<Course> createCourse(@RequestBody CourseDto courseDto){
+    public ResponseEntity<Course> createCourse(@RequestBody @Valid CourseDto courseDto){
         Course category = courseService.createcourse(courseDto);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(category);

@@ -3,6 +3,7 @@ package com.coursemanagement.controller;
 import com.coursemanagement.dto.ContentDto;
 import com.coursemanagement.entity.Content;
 import com.coursemanagement.services.instructor.content.ContentServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class ContentController {
     private final ContentServiceImpl contentService;
 
     @PostMapping("/content")
-    public ResponseEntity<ContentDto> addContent(@ModelAttribute ContentDto contentDto) throws IOException {
+    public ResponseEntity<ContentDto> addContent(@ModelAttribute @Valid ContentDto contentDto) throws IOException {
         ContentDto courseDto1 = contentService.addContent(contentDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(courseDto1);
     }
@@ -40,7 +41,7 @@ public class ContentController {
     }
 
     @PatchMapping("/content/{contentId}")
-    public ResponseEntity<Content> updateContentDetails(@RequestBody ContentDto contentDto, @PathVariable("contentId") Long contentId) throws IOException {
+    public ResponseEntity<Content> updateContentDetails(@Valid @RequestBody ContentDto contentDto, @PathVariable("contentId") Long contentId) throws IOException {
         Content updatecontentDto = this.contentService.updateContent(contentDto, contentId);
 
         return new ResponseEntity<Content>(updatecontentDto, HttpStatus.OK);

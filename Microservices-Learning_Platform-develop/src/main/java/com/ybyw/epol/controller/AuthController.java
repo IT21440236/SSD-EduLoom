@@ -8,7 +8,9 @@ import com.ybyw.epol.entity.User;
 import com.ybyw.epol.repository.UserRepository;
 import com.ybyw.epol.services.auth.AuthService;
 import com.ybyw.epol.utils.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,12 +21,11 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -51,7 +52,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/authenticate")
-    public void setAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response) throws IOException, JSONException {
+    public void setAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest, HttpServletResponse response,HttpSession session) throws IOException, JSONException {
 
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -68,6 +69,8 @@ public class AuthController {
 
         // check optional user
         if(optionalUser.isPresent()){
+            System.out.println(optionalUser);
+            session.setAttribute("currentUser", optionalUser.get());
             response.getWriter().write(new JSONObject()
                     .put("userId", optionalUser.get().getId())
                     .put("username", optionalUser.get().getName())
@@ -97,5 +100,22 @@ public class AuthController {
 //        userRegistrationSource.userRegistration().apply(userDto);
 
         return new ResponseEntity<>(userDto, HttpStatus.OK);
+    }
+
+    @GetMapping("/current-user")
+    public ResponseEntity<?> getCurrentUser(HttpSession session) throws JSONException {
+        User user = (User) session.getAttribute("currentUser");
+
+        if (user != null) {
+            return ResponseEntity.ok(new JSONObject()
+                    .put("userId", user.getId())
+                    .put("username", user.getName())
+                    .put("email", user.getEmail())
+                    .put("role", user.getRole())
+                    .toString()
+            );
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
     }
 }

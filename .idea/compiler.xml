@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="notification" />
         <module name="Payment" />
         <module name="learnerservice" />
         <module name="epol" />
@@ -28,6 +29,7 @@
       <module name="ServiceRegistry" options="-parameters" />
       <module name="epol" options="-parameters" />
       <module name="learnerservice" options="-parameters" />
+      <module name="notification" options="-parameters" />
     </option>
   </component>
 </project>

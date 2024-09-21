@@ -35,8 +35,18 @@ public class NotificationServiceImpl implements NotificationService {
             SimpleMailMessage message = new SimpleMailMessage();
 //            message.setFrom("fromemail@gmail.com");
             message.setTo(toEmail);
-            message.setText(enrolledCourseId);
             message.setSubject(courseName);
+
+            // Set the body of the email
+            String emailBody = "Dear " + toEmail + ",\n\n" +
+                    "Congratulations on your successful enrollment!\n\n" +
+                    "Course Name: " + courseName + "\n" +
+                    "Enrolled Course ID: " + enrolledCourseId + "\n\n" +
+                    "We're excited to have you on board. Please check your dashboard for more details about the course.\n\n" +
+                    "Best Regards,\n" +
+                    "Your EduLoom Team";
+
+            message.setText(emailBody);
             mailSender.send(message);
 
             Notification notification = new Notification();

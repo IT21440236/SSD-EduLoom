@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment History</title>
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+<h2>Payment History</h2>
+<table>
+  <thead>
+  <tr>
+    <th>Payment ID</th>
+    <th>Date</th>
+    <th>Price</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="payment : ${paymentHistory}">
+    <td th:text="${payment.id}"></td>
+    <td th:text="${#dates.format(payment.date, 'yyyy-MM-dd')}"></td>
+    <td th:text="${payment.price}"></td>
+    <td th:text="${payment.description}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

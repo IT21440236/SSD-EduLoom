@@ -36,8 +36,8 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public Course updateCourse(CourseDto courseDto, Long courseId) {
-        Course updateCourse = this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course", "course id", courseId));
+    public Course updateCourse(CourseDto courseDto, Long courseId) throws ResourceNotFoundException {
+        Course updateCourse = this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course Not Found"));
 
         updateCourse.setName(courseDto.getName());
         updateCourse.setCoursePrice(courseDto.getCoursePrice());
@@ -55,13 +55,19 @@ public class CourseServiceImpl implements CourseService{
     }
 
     @Override
-    public void deleteCourse(Long courseId) {
-        this.courseRepository.delete(this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course", "Course Id", courseId)));
+    public void deleteCourse(Long courseId) throws ResourceNotFoundException {
+        this.courseRepository.delete(this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course Not Found")));
     }
 
     @Override
-    public Course getCourseById(Long courseId) {
-        return this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course", "Course Id", courseId));
+    public Course getCourseById(Long courseId) throws ResourceNotFoundException {
+        return this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course Not Found"));
     }
 
+    @Override
+    public Course getOneCourse(Long courseId) throws ResourceNotFoundException {
+        Course oneCourse = this.courseRepository.findById(courseId).orElseThrow(() -> new ResourceNotFoundException("Course Not Found"));
+
+        return oneCourse;
+    }
 }

@@ -3,6 +3,8 @@ package com.coursemanagement.entity;
 import com.coursemanagement.dto.ContentDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -15,11 +17,16 @@ public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Content type is required")
     private String contentType;
 
+    @NotBlank(message = "Title is required")
+    @Size(min = 5, max = 100, message = "Title must be between 5 and 100 characters")
     private String title;
 
     @Lob
+    @NotBlank(message = "Description is required")
     private String description;
 
     private String status;

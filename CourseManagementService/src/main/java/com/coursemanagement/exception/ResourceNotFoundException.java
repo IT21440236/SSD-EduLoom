@@ -1,15 +1,18 @@
 package com.coursemanagement.exception;
 
-public class ResourceNotFoundException extends RuntimeException{
+import com.coursemanagement.dto.ErrorDTO;
 
-    String resourceName;
-    String fieldName;
-    long fieldValue;
+public class ResourceNotFoundException extends Exception{
 
-    public ResourceNotFoundException(String resourceName, String fieldName, long fieldValue){
-        super(String.format("%s not found with %s: %s", resourceName, fieldName, fieldValue));
-        this.resourceName = resourceName;
-        this.fieldName = fieldName;
-        this.fieldValue = fieldValue;
+    private final transient ErrorDTO errorDTO;
+
+    public ResourceNotFoundException(String message) {
+        super(message);
+        this.errorDTO = null;
+    }
+
+    public ResourceNotFoundException(String message, ErrorDTO errorDTO) {
+        super(message);
+        this.errorDTO = errorDTO;
     }
 }

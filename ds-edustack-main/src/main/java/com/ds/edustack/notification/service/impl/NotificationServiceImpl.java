@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.apache.commons.text.StringEscapeUtils;
 
 import java.util.Optional;
 
@@ -32,15 +33,18 @@ public class NotificationServiceImpl implements NotificationService {
                                  String courseName
     ) {
         try {
-            SimpleMailMessage message = new SimpleMailMessage();
-//            message.setFrom("fromemail@gmail.com");
-            message.setTo(toEmail);
-            message.setSubject(courseName);
+            // Escape potentially harmful characters from user input
+            String safeEmail = StringEscapeUtils.escapeHtml4(toEmail);
+            String safeCourseName = StringEscapeUtils.escapeHtml4(courseName);
 
-            // Set the body of the email
-            String emailBody = "Dear " + toEmail + ",\n\n" +
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(safeEmail); // Use the escaped email
+            message.setSubject(safeCourseName); // Use the escaped course name
+
+            // Set the body of the email with escaped values
+            String emailBody = "Dear " + safeEmail + ",\n\n" +
                     "Congratulations on your successful enrollment!\n\n" +
-                    "Course Name: " + courseName + "\n" +
+                    "Course Name: " + safeCourseName + "\n" +
                     "Enrolled Course ID: " + enrolledCourseId + "\n\n" +
                     "We're excited to have you on board. Please check your dashboard for more details about the course.\n\n" +
                     "Best Regards,\n" +
@@ -51,11 +55,10 @@ public class NotificationServiceImpl implements NotificationService {
 
             Notification notification = new Notification();
             notification.setId(UIDGenerator.generateEmailUID());
-            notification.setToEmail(toEmail);
+            notification.setToEmail(safeEmail);
             notification.setCourseId(enrolledCourseId);
-            notification.setCourseName(courseName);
+            notification.setCourseName(safeCourseName);
             notification.setStatus(NotificationStatus.DELIVERED);
-//            notification.setStatus(NotificationStatus.valueOf(NotificationStatus.DELIVERED.toString()));
             notificationRepository.save(notification);
 
             System.out.println("Mail Sent Successfully to: " + toEmail + " for course: " + courseName + " with course id: " + enrolledCourseId);
